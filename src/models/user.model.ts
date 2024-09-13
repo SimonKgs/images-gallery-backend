@@ -4,8 +4,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 import { User } from '../interfaces/user.interface';
 
 const userSchema = new Schema<User>({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true },
+  username: { type: String, required: true, },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profileImage: { type: String },
   images: [{ type: String }],

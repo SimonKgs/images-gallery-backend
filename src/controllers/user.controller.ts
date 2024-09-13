@@ -85,7 +85,7 @@ async function createUser(req: Request, res: Response) {
 }
 
 
-//TODO: UPDATE USER
+//* UPDATE USER
 async function updateUser(req: Request, res: Response) {
   const userId = req.params.id;
   const updateData: Partial<User> = req.body;
