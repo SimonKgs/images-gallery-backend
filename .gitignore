@@ -1,6 +1,6 @@
 # Ignore all files inside the directories
-public/assets/images/*
-public/assets/profilePictures/*
+public/assets/images/*.jpg
+public/assets/profilePictures/*.png
 
 # Node modules
 node_modules/
