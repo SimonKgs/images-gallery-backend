@@ -1,9 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import UserModel from '../models/user.model';
-import authRoutes from '../routes/auth.routes';
-import userRoutes from '../routes/user.routes';
-import mainRoutes from '../routes/main.routes';
+import {authRoutes, imageRoutes, userRoutes} from '../routes';
+
 
 // Import the function that connects to the database
 import { connectToDatabase } from '../db';
@@ -50,7 +49,7 @@ export class Server {
       // Use routes
       this.app.use('/auth', authRoutes);
       this.app.use('/user', userRoutes);
-      this.app.use('/', mainRoutes);
+      this.app.use('/images', imageRoutes);
 
       // Start the server
       this.app.listen(5000, () => {

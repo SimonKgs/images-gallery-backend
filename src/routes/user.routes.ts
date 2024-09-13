@@ -1,19 +1,13 @@
 import express from 'express';
-import { getUser, updateUser, deleteUser } from '../controllers/user.controller';
+import { getUser, updateUser, deleteUser, createUser } from '../controllers/user.controller';
+import { createUserValidations, updateUserValidations, validate, validateObjectId } from '../middlewares/user.validation.middleware';
 
 const router = express.Router();
 
-// User routes
-router.get('/:id', getUser);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
 
-// User images routes
-router.post('/:id/images', (req, res) => {
-  // Handle image upload logic
-});
-router.put('/:id/images/:img_id/edit', (req, res) => {
-  // Handle image editing logic
-});
+router.post('/', createUserValidations(), validate, createUser);
+router.get('/:id', validateObjectId, getUser);
+router.patch('/:id', validateObjectId, updateUserValidations(), validate, updateUser);
+router.delete('/:id', validateObjectId, deleteUser);
 
 export default router;
