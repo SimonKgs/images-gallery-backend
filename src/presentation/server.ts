@@ -1,35 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-import UserModel from '../models/user.model';
+import dotenv from 'dotenv';
+
 import {authRoutes, imageRoutes, userRoutes} from '../routes';
 
-
-// Import the function that connects to the database
+// function that connects to the database
 import { connectToDatabase } from '../db';
 
-// Function to insert a user
-async function insertUser() {
-  try {
-    const user = new UserModel({
-      username: 'juan',
-      email: 'juan@example.com',
-      passwordHash: '$2b$10$...', // This should be a hashed password
-      profileImage: 'http://127.0.0.1/assets/images/juan.jpg',
-      images: ['http://127.0.0.1/assets/images/photo1.jpg'],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-
-    const result = await user.save();
-    console.log('Inserted user with id:', result._id);
-    return result; // Return the result to use in the route
-  } catch (error) {
-    console.error('Error inserting user:', error);
-    throw error; // Propagate the error
-  }
-}
+// Load the environment variables
+dotenv.config();
 
 export class Server {
+
   private app = express();
 
   async start() {
@@ -52,8 +34,10 @@ export class Server {
       this.app.use('/images', imageRoutes);
 
       // Start the server
-      this.app.listen(5000, () => {
-        console.log(`Server running on port ${5000}`);
+      const PORT = process.env.PORT || 5001;
+
+      this.app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
       });
     } catch (error) {
       console.error('Error starting server:', error);

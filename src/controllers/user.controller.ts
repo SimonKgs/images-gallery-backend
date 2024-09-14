@@ -23,10 +23,11 @@ async function getUser(req: Request, res: Response) {
       return res.status(404).send('User not found');
     }
 
-    const { username, email } = user;
+    const { username, email, profileImage } = user;
 
     res.json({
       name: username,
+      profileImage,
       email,
     });
 
@@ -93,7 +94,7 @@ async function updateUser(req: Request, res: Response) {
   try {
 
     // First check if the email is being updated
-    // and if it is unique and if I it is not the same as the user
+    // and if it is unique and if it is not the same as the user
     if (updateData.email) {
 
       const existingUser = await UserModel.findOne({ email: updateData.email });
