@@ -5,9 +5,6 @@ import { generateToken } from '../utils/jwt';
 
 export const loginUser = async (req: Request, res: Response) => {
   console.log('LOGIN USER');
-  
-  console.log(req.body);
-  
 
   try {
 
@@ -30,6 +27,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const token = generateToken(user._id.toString());
 
     res.json({
+      ok: true,
       token,
       id: user._id,
       username: user.username,

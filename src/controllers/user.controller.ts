@@ -26,6 +26,7 @@ async function getUser(req: Request, res: Response) {
     const { username, email, profileImage } = user;
 
     res.json({
+      ok: true,
       name: username,
       profileImage,
       email,
@@ -72,6 +73,7 @@ async function createUser(req: Request, res: Response) {
     
     // Respond with the created user
     res.status(201).json({
+      ok: true,
       id,
       username,
       email,
@@ -123,6 +125,7 @@ async function updateUser(req: Request, res: Response) {
 
     // Respond with the updated user
     res.json({
+      ok: true,
       id: updatedUser._id,
       message: `User Updated Successfully ${updatedUser.email}`,
     });
@@ -151,6 +154,7 @@ async function deleteUser(req: Request, res: Response) {
     const { username, email } = deletedUser;
 
     res.json({
+      ok: true,
       message: 'User deleted successfully',
       name: username,
       email

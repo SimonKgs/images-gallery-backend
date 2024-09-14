@@ -8,7 +8,6 @@ const userSchema = new Schema<User>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profileImage: { type: String },
-  images: [{ type: String }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

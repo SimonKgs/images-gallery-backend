@@ -29,6 +29,7 @@ export async function registerUser(req: Request, res: Response) {
 
     const result = await newUser.save();
     res.status(201).json({
+      ok: true,
       id: result._id,
       username: result.username,
       email: result.email,
