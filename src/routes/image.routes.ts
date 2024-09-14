@@ -17,10 +17,9 @@ router.post('/user/:id',
     validateImg, // middleware to handle validation results
     uploadImage // your controller
 );
-router.patch('/user/:id/:img_id/edit',
+router.patch('/user/:id/:img_id',
     updateImageValidations(),
     authOwnershipMiddleware,
-    uploadMiddleware,
     validateImg,
     editImage
 );

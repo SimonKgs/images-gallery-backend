@@ -100,7 +100,58 @@ async function uploadImage(req: Request, res: Response) {
 
 //TODO: EDIT IMAGE
 async function editImage(req: Request, res: Response) {
-  // Handle registration logic
+  
+  try {
+    const img_id  = req.params.img_id
+
+    if (!img_id) res.status(400).json({ message: 'No id found' });
+    
+    const { title, isPrivate } = req.body;
+
+    // Get the image stored to see if I can update if it exist
+    // and if it is private 
+    const existingImage = await ImageModel.findById(img_id);
+
+    if (!existingImage) {
+      return res.status(404).send('Image not found');
+    }
+
+    // it is not enough to check if a value comes also 
+    // if it comes this needs to be a valid value for now lets limit to two
+    // "on" because it comes like that from a form sometimes and the correct true
+    // and if not match a correct value to update i need to keep the existing valui 
+    let isPrivateReq: boolean;
+
+    if (isPrivate === 'on' || isPrivate === true) {
+      isPrivateReq = true;
+    } else if (isPrivate === 'off' || isPrivate === false) {
+      isPrivateReq = false;
+    } else {
+      isPrivateReq = existingImage.isPrivate;
+    }
+
+    console.log(isPrivateReq)
+
+    // Update the image correctly and return the new image values
+    const updatedImage = await ImageModel.findByIdAndUpdate(
+      img_id,
+      {
+        title: title || existingImage.title,
+        isPrivate: isPrivateReq,
+        updatedAt: new Date()
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      ok: true,
+      image: updatedImage
+    });
+
+  } catch (error) {
+    console.error('Error updating the image:', error);
+    res.status(500).send('Internal Server Error');
+  }
 }
 
 
@@ -111,8 +162,7 @@ async function deleteImage (req: Request, res: Response) {
 
     const { id, img_id } = req.params
 
-    if (!id || !img_id) return;
-
+    if (!id || !img_id) res.status(400).json({ message: 'No id found' });
 
     const deletedImage: Image | null = await ImageModel.findByIdAndDelete(img_id);
     

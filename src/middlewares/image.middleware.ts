@@ -4,15 +4,14 @@ export const uploadImageValidations = () => [
     body('title')
         .isString()
         .notEmpty().withMessage('Title is required')
-        .isLength({ min: 3, max: 20 }).withMessage('Image title must be between 3 and 20 characters'),
+        .isLength({ min: 2, max: 20 }).withMessage('Image title must be between 3 and 20 characters'),
   ];
   
 export const updateImageValidations = () => [
     body('title')
         .optional()
         .isString()
-        .notEmpty().withMessage('Title is required')
-        .isLength({ min: 3, max: 20 }).withMessage('Image title must be between 3 and 20 characters'),
+        .isLength({ min: 2, max: 20 }).withMessage('Image title must be between 3 and 20 characters'),
 ];
 
 
