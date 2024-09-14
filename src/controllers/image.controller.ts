@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import ImageModel from '../models/image.model';
 import { Image } from '../interfaces/image.interface';
 
@@ -115,15 +117,27 @@ async function deleteImage (req: Request, res: Response) {
     const deletedImage: Image | null = await ImageModel.findByIdAndDelete(img_id);
     
     if (!deletedImage) {
-      return res.status(404).send('User not found');
+      return res.status(404).send('Image not found');
     }
 
-    console.log("DELETING.....", id, img_id)
-    res.status(201).json({
-      ok: true,
-      message: `Image ${img_id} deleted successfully`
-    })
-    
+    const { image: imagePath } = deletedImage;
+
+    // Resolve the absolute path of the image
+    const fullPath = path.resolve(imagePath);
+
+    // Delete the image file
+    fs.unlink(fullPath, (err) => {
+      if (err) {
+        console.error('Error deleting the file:', err);
+        return res.status(500).send('Error deleting the file');
+      }
+
+      // console.log('File deleted:', fullPath);
+      res.status(200).json({
+        ok: true,
+        message: `Image ${img_id} deleted successfully`
+      });
+    });
   } catch (error) {
       console.error('Error deleting image:', error);
       res.status(500).send('Internal Server Error');
