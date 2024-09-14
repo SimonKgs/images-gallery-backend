@@ -2,6 +2,10 @@
 public/assets/images/*.jpg
 public/assets/profilePictures/*.png
 
+# ignore content of uploads
+src/uploads/*
+!src/uploads/.gitkeep
+
 # Node modules
 node_modules/
 
