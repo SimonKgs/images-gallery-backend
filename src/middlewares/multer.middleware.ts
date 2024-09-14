@@ -18,7 +18,6 @@ const fileFilter = (req: any, file: any, cb: any) => {
   const ext = path.extname(file.originalname).toLowerCase();
 
   if (allowedTypes.includes(ext)) {
-    console.log("allowed");
     cb(null, true);
   } else {
     console.log("not allowed");

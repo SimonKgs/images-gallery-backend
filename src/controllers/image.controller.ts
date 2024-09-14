@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import ImageModel from '../models/image.model';
 import { Image } from '../interfaces/image.interface';
 
+
+//* GET ALL IMAGES
 async function getAllImages(req: Request, res: Response) {
 
     try {
@@ -20,19 +22,34 @@ async function getAllImages(req: Request, res: Response) {
     }
 }
 
+//* GET USER IMAGES
 async function getUserImages(req: Request, res: Response) {
-  // Handle registration logic
+  try {
+
+    const userId: string = req.params.id;
+    
+    // return all images of the user
+    const images = await ImageModel.find({ user: userId})
+
+    res.status(201).json({
+      ok: true,
+      images
+    });
+
+  } catch (error) {
+    console.error('Error loading the images:', error);
+    res.status(500).send('Internal Server Error');
+  }
 }
 
+
+//* UPLOAD IMAGE
 async function uploadImage(req: Request, res: Response) {
 
 
   try {
     const userId: string = req.params.id;
     const file = req.file;
-
-    // console.log(req.file); // For the uploaded file
-    // console.log(req.body); // For the form fields
 
     // Check if the image is uploaded
     if (!file) {
@@ -44,7 +61,7 @@ async function uploadImage(req: Request, res: Response) {
       return res.status(400).json({ message: 'img title is required' });
     }
 
-    // Convert isPrivate to boolean
+    // Convert isPrivate to boolean, it comes 
     const isPrivateBool = req.body.isPrivate === 'on' || req.body.isPrivate === 'true';
     
     // Create a new image instance
@@ -79,13 +96,39 @@ async function uploadImage(req: Request, res: Response) {
   }
 }
 
-
+//TODO: EDIT IMAGE
 async function editImage(req: Request, res: Response) {
   // Handle registration logic
 }
 
+
+//* DELETE IMAGE
 async function deleteImage (req: Request, res: Response) {
-  // Handle registration logic
+  
+  try {
+
+    const { id, img_id } = req.params
+
+    if (!id || !img_id) return;
+
+
+    const deletedImage: Image | null = await ImageModel.findByIdAndDelete(img_id);
+    
+    if (!deletedImage) {
+      return res.status(404).send('User not found');
+    }
+
+    console.log("DELETING.....", id, img_id)
+    res.status(201).json({
+      ok: true,
+      message: `Image ${img_id} deleted successfully`
+    })
+    
+  } catch (error) {
+      console.error('Error deleting image:', error);
+      res.status(500).send('Internal Server Error');
+  }
+
 }
 
 

@@ -8,11 +8,11 @@ export const uploadImageValidations = () => [
   ];
   
 export const updateImageValidations = () => [
-body('title')
-    .optional()
-    .isString()
-    .notEmpty().withMessage('Title is required')
-    .isLength({ min: 3, max: 20 }).withMessage('Image title must be between 3 and 20 characters'),
+    body('title')
+        .optional()
+        .isString()
+        .notEmpty().withMessage('Title is required')
+        .isLength({ min: 3, max: 20 }).withMessage('Image title must be between 3 and 20 characters'),
 ];
 
 

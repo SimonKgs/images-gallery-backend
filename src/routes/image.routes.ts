@@ -17,13 +17,13 @@ router.post('/user/:id',
     validateImg, // middleware to handle validation results
     uploadImage // your controller
 );
-router.patch('/user/:id/images/:img_id/edit',
+router.patch('/user/:id/:img_id/edit',
     updateImageValidations(),
     authOwnershipMiddleware,
     uploadMiddleware,
     validateImg,
     editImage
 );
-router.delete('/user/:id/images/:img_id', authOwnershipMiddleware, deleteImage);
+router.delete('/user/:id/:img_id', authOwnershipMiddleware, deleteImage);
 
 export default router;
