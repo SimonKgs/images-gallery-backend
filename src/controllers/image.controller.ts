@@ -98,7 +98,7 @@ async function uploadImage(req: Request, res: Response) {
   }
 }
 
-//TODO: EDIT IMAGE
+//* EDIT IMAGE
 async function editImage(req: Request, res: Response) {
   
   try {
