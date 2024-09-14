@@ -1,7 +1,8 @@
 import express from 'express';
 import { getAllImages, getUserImages, uploadImage, editImage, deleteImage } from '../controllers/image.controller';
-import { imageExtensionValidationMiddleware, updateImageValidations, uploadImageValidations, validateImg } from '../middlewares/image.middleware';
+import { updateImageValidations, uploadImageValidations, validateImg } from '../middlewares/image.middleware';
 import { authOwnershipMiddleware } from '../middlewares/auth.middleware';
+import { uploadMiddleware } from '../middlewares/multer.middleware';
 
 const router = express.Router();
 
@@ -10,16 +11,16 @@ const router = express.Router();
 router.get('/',  getAllImages);
 router.get('/user/:id', authOwnershipMiddleware, getUserImages);
 router.post('/user/:id',
-    uploadImageValidations(),
     authOwnershipMiddleware,
-    imageExtensionValidationMiddleware,
-    validateImg, 
-    uploadImage
+    uploadMiddleware, // multer middleware to handle file uploads and type validation
+    uploadImageValidations(), // express-validator middleware for validation
+    validateImg, // middleware to handle validation results
+    uploadImage // your controller
 );
 router.patch('/user/:id/images/:img_id/edit',
     updateImageValidations(),
     authOwnershipMiddleware,
-    imageExtensionValidationMiddleware,
+    uploadMiddleware,
     validateImg,
     editImage
 );
