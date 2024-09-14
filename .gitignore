@@ -1,6 +1,9 @@
 # Ignore all files inside the directories
-public/assets/images/*.jpg
-public/assets/profilePictures/*.png
+public/assets/images/*
+!public/assets/images/.gitkeep
+
+public/assets/profilePictures/*
+!public/assets/profilePictures/.gitkeep
 
 # ignore content of uploads
 src/uploads/*
