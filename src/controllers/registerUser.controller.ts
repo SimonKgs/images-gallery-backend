@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/user.model';
+import { generateToken } from '../utils/jwt';
 
 const saltRounds = 10;
 
@@ -28,8 +29,13 @@ export async function registerUser(req: Request, res: Response) {
     });
 
     const result = await newUser.save();
+
+    // Generate JWT token
+    const token = generateToken(result._id.toString());
+
     res.status(201).json({
       ok: true,
+      token,
       id: result._id,
       username: result.username,
       email: result.email,
