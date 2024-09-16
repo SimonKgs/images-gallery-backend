@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import ImageModel from '../models/image.model';
 import { Image } from '../interfaces/image.interface';
-import { updateImageUrls } from '../utils/imageUtils';
+import { getImageUrl, updateImageUrls } from '../utils/imageUtils';
 
 
 //* GET ALL IMAGES
@@ -182,8 +182,8 @@ async function deleteImage (req: Request, res: Response) {
     const { image: imagePath } = deletedImage;
 
     // Resolve the absolute path of the image
-    const fullPath = path.resolve(imagePath);
-
+    const fullPath = path.join(__dirname, '..', '..', 'public', 'assets', 'uploads', path.basename(imagePath)); 
+  
     // Delete the image file
     fs.unlink(fullPath, (err) => {
       if (err) {

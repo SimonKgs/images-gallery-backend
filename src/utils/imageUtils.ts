@@ -1,8 +1,8 @@
 import { Request } from 'express';
-import { Image } from '../interfaces/image.interface'; // Adjust the path as needed
+import { Image } from '../interfaces/image.interface';
 
 // get the full URL for a single image
-function getImageUrl(req: Request, imagePath: string): string {
+export function getImageUrl(req: Request, imagePath: string): string {
   return `${req.protocol}://${req.get('host')}/assets/uploads/${imagePath.replace('\\', '/')}`;
 }
 
