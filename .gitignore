@@ -2,6 +2,9 @@
 public/assets/images/*
 !public/assets/images/.gitkeep
 
+public/assets/uploads/*
+!public/assets/uploads/.gitkeep
+
 public/assets/profilePictures/*
 !public/assets/profilePictures/.gitkeep
 

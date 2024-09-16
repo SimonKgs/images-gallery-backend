@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import ImageModel from '../models/image.model';
 import { Image } from '../interfaces/image.interface';
+import { updateImageUrls } from '../utils/imageUtils';
 
 
 //* GET ALL IMAGES
@@ -13,9 +14,12 @@ async function getAllImages(req: Request, res: Response) {
       // return all public images
       const images = await ImageModel.find({ isPrivate: false})
 
+      // To convert the route of the images
+      const fullImages = updateImageUrls(req, images);
+
       res.status(201).json({
         ok: true,
-        images
+        images: fullImages
       });
 
     } catch (error) {
@@ -33,9 +37,12 @@ async function getUserImages(req: Request, res: Response) {
     // return all images of the user
     const images = await ImageModel.find({ user: userId})
 
+    // Updating the routes of the images
+    const fullImages = updateImageUrls(req, images);
+
     res.status(201).json({
       ok: true,
-      images
+      images: fullImages
     });
 
   } catch (error) {
@@ -65,13 +72,15 @@ async function uploadImage(req: Request, res: Response) {
 
     // Convert isPrivate to boolean, it comes 
     const isPrivateBool = req.body.isPrivate === 'on' || req.body.isPrivate === 'true';
+
+    console.log("PATH: ", file.filename);
     
     // Create a new image instance
     const newImage = new ImageModel({
       title: req.body.title,
-      image: file.path, // Store the image path
+      image: file.filename, // now only store the name to scalability
       user: userId,
-      isPrivate: isPrivateBool, // Default to false if not provided
+      isPrivate: isPrivateBool,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

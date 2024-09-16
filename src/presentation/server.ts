@@ -6,6 +6,7 @@ import {authRoutes, imageRoutes, userRoutes} from '../routes';
 
 // function that connects to the database
 import { connectToDatabase } from '../db';
+import path from 'path';
 
 // Load the environment variables
 dotenv.config();
@@ -27,6 +28,7 @@ export class Server {
 
       // Serve static files if needed
       this.app.use(express.static('public'));
+      
 
       // Use routes
       this.app.use('/auth', authRoutes);
