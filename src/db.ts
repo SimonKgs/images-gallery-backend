@@ -1,7 +1,7 @@
 // db.ts
 import mongoose from 'mongoose';
 
-const uri = "mongodb://localhost:27017/myDatabase";
+const uri = "mongodb://localhost:27017/imagesDB";
 
 // Connect to MongoDB using Mongoose
 export async function connectToDatabase() {
