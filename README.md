@@ -43,6 +43,8 @@ PORT=5000
 
 Para este punto empezaré explicando sin entrar en detalle las dependencias del proyecto, para entender porqué están ahí, para más información visitar la página oficial de cada técnologia.
 
+También dejo la documentación de los distintos endpoints que utilizado para las pruebas durante el desarrollo [aquí](https://documenter.getpostman.com/view/21693612/2sAXqqchvV)
+
 --- 
 ### Dependencias
 
