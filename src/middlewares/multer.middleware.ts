@@ -20,7 +20,7 @@ const fileFilter = (req: any, file: any, cb: any) => {
   if (allowedTypes.includes(ext)) {
     cb(null, true);
   } else {
-    console.log("not allowed");
+    console.error("not allowed");
     cb(new Error('File type doesn\'t allow'), false);
   }
 };

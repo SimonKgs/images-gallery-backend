@@ -72,8 +72,6 @@ async function uploadImage(req: Request, res: Response) {
 
     // Convert isPrivate to boolean, it comes 
     const isPrivateBool = req.body.isPrivate === 'on' || req.body.isPrivate === 'true';
-
-    console.log("PATH: ", file.filename);
     
     // Create a new image instance
     const newImage = new ImageModel({
@@ -139,7 +137,6 @@ async function editImage(req: Request, res: Response) {
       isPrivateReq = existingImage.isPrivate;
     }
 
-    console.log(isPrivateReq)
 
     // Update the image correctly and return the new image values
     const updatedImage = await ImageModel.findByIdAndUpdate(
@@ -191,7 +188,6 @@ async function deleteImage (req: Request, res: Response) {
         return res.status(500).send('Error deleting the file');
       }
 
-      // console.log('File deleted:', fullPath);
       res.status(200).json({
         ok: true,
         message: `Image ${img_id} deleted successfully`

@@ -4,7 +4,6 @@ import UserModel from '../models/user.model';
 import { generateToken } from '../utils/jwt';
 
 export const loginUser = async (req: Request, res: Response) => {
-  console.log('LOGIN USER');
 
   try {
 
